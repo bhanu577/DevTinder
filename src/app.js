@@ -2,20 +2,16 @@ const express = require("express");
 
 const iniate = express();
 
-iniate.use("/getData/2", (req, res) => {
-  res.send("Hi Bhanu You are in route /getData/2");
-});
+iniate.get("/user",(req,res)=>{
+    res.send({firstname:"Bhanu",lastname:"Prakash"});
+})
+iniate.post("/user",(req,res)=>{
+    res.send("Data Saved to DB successfully");
+})
 
-iniate.use("/getData", (req, res) => {
-  res.send("Hi bhanu I am from getData");
-});
-
-iniate.use("/getUser", (req, res) => {
-  res.send("User : Bhanu Age:25");
-});
-iniate.use("/", (req, res) => {
-  res.send("Hi Bhanu");
-});
+iniate.delete("/user",(req,res)=>{
+    res.send("Data has been deleted successfully");
+})
 iniate.listen(7777, () => {
   console.log("Server is connected to the port 7777...!");
 });
