@@ -1,25 +1,24 @@
 const express = require("express");
 
 const iniate = express();
+const { adminAuth, userAuth } = require("./middlewares/admin-auth");
 
-iniate.use(
-  "/getUser",
-  (req, res, next) => {
-    console.log("I am in 1st Route");
-    next();
-  },
-  (req, re, next) => {
-    console.log("I am in 2nd Route");
-    next();
-  },
-  [(req, res, next) => {
-    console.log("I am in 3rd Route");
-    next();
-  },
-  (req,res)=>{
-    res.send("Response 4 !!!");
-  }]
-);
+iniate.use("/admin", adminAuth);
+
+iniate.post("/user/login", (req, res) => {
+  res.send("User Logged in Successfully");
+});
+
+iniate.get("/user", userAuth, (req, res) => {
+  res.send("Get All User Data");
+});
+iniate.get("/admin/allUsers", (req, res) => {
+  res.send("GetAll User API is called");
+});
+
+iniate.delete("/admin/deleteUser", (req, res) => {
+  res.send("DeleteUser API called");
+});
 iniate.listen(7777, () => {
   console.log("Server is connected to the port 7777...!");
 });
