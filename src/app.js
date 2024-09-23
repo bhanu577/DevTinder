@@ -19,6 +19,22 @@ iniate.get("/admin/allUsers", (req, res) => {
 iniate.delete("/admin/deleteUser", (req, res) => {
   res.send("DeleteUser API called");
 });
+
+iniate.get("/getUser",(req,res)=>{
+  try{
+  throw new Error("ksjfkjwe");
+  res.send("UserAPI");
+  }
+  catch{
+    res.status(500).send("Something went wrong!!!!")
+  }
+});
+
+iniate.use("/",(err,req,res,next)=>{
+  if(err){
+    res.status(500).send("Something went wrong with data!!!!")
+  }
+})
 iniate.listen(7777, () => {
   console.log("Server is connected to the port 7777...!");
 });
