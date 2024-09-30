@@ -19,6 +19,24 @@ iniate.get("/userByEmailID", async (req, res) => {
   }
 });
 
+// delete api to delete a specific user from the db
+
+iniate.delete("/deleteUser", async (req, res) => {
+  const userId = req.body.userId;
+  try {
+    const result = await User.findByIdAndDelete({ _id: userId });
+
+    console.log(result);
+    if (!result) {
+      res.status(404).send("User is not enrolled with Dev Tinder to delete");
+    } else {
+      res.send("user is been delete");
+    }
+  } catch (err) {
+    res.status(400).send("Error in Deleting the user Data" + err.message);
+  }
+});
+
 // get api call to get all the users data into feed
 iniate.get("/feed", async (req, res) => {
   try {
@@ -33,7 +51,7 @@ iniate.get("/feed", async (req, res) => {
   }
 });
 
-// post api call to enroll or sigup the user 
+// post api call to enroll or sigup the user
 iniate.post("/signup", async (req, res) => {
   const user = new User(req.body);
   try {
