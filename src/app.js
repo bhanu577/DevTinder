@@ -21,7 +21,24 @@ iniate.get("/userByEmailID", async (req, res) => {
 
 // delete api to delete a specific user from the db
 
-iniate.delete("/deleteUser", async (req, res) => {
+iniate.patch("/user",async(req,res)=>{
+  const userId = req.body.userId;
+  const data = req.body;
+
+  try{
+    const result = await User.findByIdAndUpdate(userId,data);
+    if(!result){
+      res.status(404).send("User is not present to update");
+    }
+    else{
+    res.send("User data is updated successfully");
+    }
+  }
+  catch(err){
+    res.status(400).send("Error in updating the user Data" + err.message);
+  }
+})
+iniate.delete("/user", async (req, res) => {
   const userId = req.body.userId;
   try {
     const result = await User.findByIdAndDelete({ _id: userId });
