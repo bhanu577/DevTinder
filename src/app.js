@@ -19,8 +19,7 @@ iniate.get("/userByEmailID", async (req, res) => {
   }
 });
 
-// delete api to delete a specific user from the db
-
+//updating user details api
 iniate.patch("/user",async(req,res)=>{
   const userId = req.body.userId;
   const data = req.body;
@@ -38,6 +37,9 @@ iniate.patch("/user",async(req,res)=>{
     res.status(400).send("Error in updating the user Data" + err.message);
   }
 })
+
+// delete api to delete a specific user from the db
+
 iniate.delete("/user", async (req, res) => {
   const userId = req.body.userId;
   try {
