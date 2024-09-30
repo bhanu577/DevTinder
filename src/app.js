@@ -5,16 +5,35 @@ const User = require("./models/user");
 
 iniate.use(express.json());
 
-iniate.get("/userByEmailID",async(req,res)=>{
-    const email = req.body.emailId
-    const user = await User.findOne({emailId:email});
-    if(!user){
+iniate.get("/userByEmailID", async (req, res) => {
+  try {
+    const email = req.body.emailId;
+    const user = await User.findOne({ emailId: email });
+    if (!user) {
       res.status(404).send("User Not Found");
-    }
-    else{
+    } else {
       res.send(user);
     }
-})
+  } catch (err) {
+    res.status(400).send("Error in fetching feed Data" + err.message);
+  }
+});
+
+// get api call to get all the users data into feed
+iniate.get("/feed", async (req, res) => {
+  try {
+    const feedData = await User.find();
+    if (!feedData) {
+      res.status(404).send("Currently There are no users in Dev Tinder");
+    } else {
+      res.send(feedData);
+    }
+  } catch (err) {
+    res.status(400).send("Error in fetching feed Data" + err.message);
+  }
+});
+
+// post api call to enroll or sigup the user 
 iniate.post("/signup", async (req, res) => {
   const user = new User(req.body);
   try {
