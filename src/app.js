@@ -25,7 +25,7 @@ iniate.patch("/user",async(req,res)=>{
   const data = req.body;
 
   try{
-    const result = await User.findByIdAndUpdate(userId,data);
+    const result = await User.findByIdAndUpdate(userId,data,{runValidators:true});
     if(!result){
       res.status(404).send("User is not present to update");
     }
@@ -34,7 +34,7 @@ iniate.patch("/user",async(req,res)=>{
     }
   }
   catch(err){
-    res.status(400).send("Error in updating the user Data" + err.message);
+    res.status(400).send("Error in updating the user Data " + err.message);
   }
 })
 
@@ -74,7 +74,7 @@ iniate.get("/feed", async (req, res) => {
 iniate.post("/signup", async (req, res) => {
   const user = new User(req.body);
   try {
-    user.save();
+    await user.save();
     res.send("User created successfully..!!");
   } catch (err) {
     res.status(400).send("Error is saving user Data" + err.message);
