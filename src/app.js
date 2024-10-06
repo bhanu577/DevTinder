@@ -25,6 +25,14 @@ iniate.patch("/user",async(req,res)=>{
   const data = req.body;
 
   try{
+    const ALLOWED_UPDATED_FIELDS = ["userId","firstName","lastName","middleName","gender","password","about","skills"];
+    const IS_UPDATED_ALLOWED = Object.keys(data).every((k)=>
+      ALLOWED_UPDATED_FIELDS.includes(k)
+    );
+    console.log(IS_UPDATED_ALLOWED)
+    if(!IS_UPDATED_ALLOWED){
+      throw new Error("Update is not allowed");
+    }
     const result = await User.findByIdAndUpdate(userId,data,{runValidators:true});
     if(!result){
       res.status(404).send("User is not present to update");
