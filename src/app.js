@@ -29,7 +29,6 @@ iniate.patch("/user",async(req,res)=>{
     const IS_UPDATED_ALLOWED = Object.keys(data).every((k)=>
       ALLOWED_UPDATED_FIELDS.includes(k)
     );
-    console.log(IS_UPDATED_ALLOWED)
     if(!IS_UPDATED_ALLOWED){
       throw new Error("Update is not allowed");
     }
@@ -81,7 +80,15 @@ iniate.get("/feed", async (req, res) => {
 // post api call to enroll or sigup the user
 iniate.post("/signup", async (req, res) => {
   const user = new User(req.body);
+  const data = req.body
   try {
+    const ALLOWED_UPDATED_FIELDS = ["firstName","lastName","middleName","emailId","dateOfBirth","gender","password","about","skills"];
+    const IS_UPDATED_ALLOWED = Object.keys(data).every((k)=>
+      ALLOWED_UPDATED_FIELDS.includes(k)
+    );
+    if(!IS_UPDATED_ALLOWED){
+      throw new Error("Failed to create new user");
+    }
     await user.save();
     res.send("User created successfully..!!");
   } catch (err) {
