@@ -20,12 +20,12 @@ iniate.get("/userByEmailID", async (req, res) => {
 });
 
 //updating user details api
-iniate.patch("/user",async(req,res)=>{
-  const userId = req.body.userId;
+iniate.patch("/user/:userId",async(req,res)=>{
+  const userId = req.params?.userId;
   const data = req.body;
 
   try{
-    const ALLOWED_UPDATED_FIELDS = ["userId","firstName","lastName","middleName","gender","password","about","skills"];
+    const ALLOWED_UPDATED_FIELDS = ["firstName","lastName","middleName","gender","password","about","skills"];
     const IS_UPDATED_ALLOWED = Object.keys(data).every((k)=>
       ALLOWED_UPDATED_FIELDS.includes(k)
     );
