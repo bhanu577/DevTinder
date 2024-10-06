@@ -32,6 +32,10 @@ iniate.patch("/user/:userId",async(req,res)=>{
     if(!IS_UPDATED_ALLOWED){
       throw new Error("Update is not allowed");
     }
+    console.log(data?.skills.length)
+    if(data?.skills.length >=10){
+      throw new Error("Skills should not be added more than 10")
+    }
     const result = await User.findByIdAndUpdate(userId,data,{runValidators:true});
     if(!result){
       res.status(404).send("User is not present to update");
